@@ -73,6 +73,8 @@ conda activate fastfold
 python setup.py install
 ```
 
+Note: Step 2 will be simplified in future release.
+
 ## Step 3: Run inference
 ### 3.1 Edit the inference.sh file
 
@@ -83,26 +85,26 @@ python setup.py install
 # add '--chunk_size [N]' to use chunk to reduce peak memory
 # add '--inplace' to use inplace to save memory
 
-python inference.py /$PATH/fastfold/data/fasta_dir/5005.fasta /$PATH/openfold/data/pdb_mmcif/data/files \
-    --output_dir /$PATH/fastfold/outputs \
+python inference.py /PATH/TO/fastfold/data/fasta_dir/5005.fasta /PATH/TO/openfold/data/pdb_mmcif/data/files \
+    --output_dir /PATH/TO/fastfold/outputs \
     --gpus 8 \
-    --uniref90_database_path /$PATH/openfold/data/uniref90/uniref90.fasta \
-    --mgnify_database_path /$PATH/openfold/data/mgnify/mgy_clusters_2018_12.fa \
-    --pdb70_database_path /$PATH/openfold/data/pdb70/pdb70 \
-    --uniref30_database_path /$PATH/openfold/data/uniref30/UniRef30_2021_03 \
-    --bfd_database_path /$PATH/openfold/data/bfd/bfd_metaclust_clu_complete_id30_c90_final_seq.sorted_opt \
+    --uniref90_database_path /PATH/TO/openfold/data/uniref90/uniref90.fasta \
+    --mgnify_database_path /PATH/TO/openfold/data/mgnify/mgy_clusters_2018_12.fa \
+    --pdb70_database_path /PATH/TO/openfold/data/pdb70/pdb70 \
+    --uniref30_database_path /PATH/TO/openfold/data/uniref30/UniRef30_2021_03 \
+    --bfd_database_path /PATH/TO/openfold/data/bfd/bfd_metaclust_clu_complete_id30_c90_final_seq.sorted_opt \
     --jackhmmer_binary_path `which jackhmmer` \
     --hhblits_binary_path `which hhblits` \
     --hhsearch_binary_path `which hhsearch` \
     --kalign_binary_path `which kalign` \
     --enable_workflow \
-    --param_path /$PATH/fastfold/data/params/params_model_1_ptm.npz \
-    --use_precomputed_alignments /$PATH/fastfold/outputs/alignments \
+    --param_path /PATH/TO/fastfold/data/params/params_model_1_ptm.npz \
+    --use_precomputed_alignments /PATH/TO/fastfold/outputs/alignments \
     --chunk_size 32 \
     --inplace
 ```
-Replace $PATH with an actual path.
 
+### 3.2 Run inference
 ```shell
 bash inference.sh
 ```
