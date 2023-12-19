@@ -1,15 +1,23 @@
 # det-fastfold-inference
 Run FastFold inference uing HPE Machine Learning Development Environment (aka MLDE)
 
-# Ref: 
+Advantages of running training/inference processes on MLDE:
+
+- **Simplified environment setting**: Set up a shell config file shell.yaml that provides a readily built docker image by Determined AI (aka MLDE) and available on DockerHub. These docker images are frequently released and users just need to pick and choose the right image which, in this example, requires CUDA 11.3 and Pytorch >= 1.12.
+
+- **Containerised environment**: Process environment is isolated from the host OS, so users do have constraint with upgrading/downgrading packages
+
+- **Automated GPU resource procurement** by defining slots number in a config file
+
+- **Automated SSH** to the launched shell environment without the need to manually setup and manage credentials when connecting to a remote cluster
+
+# References: 
 1. [FastFold github repo](https://github.com/hpcaitech/FastFold/tree/main)
 2. [How to start a shell in MLDE](https://hpe-mlde.determined.ai/latest/tools/cli/commands-and-shells.html#shells)
 
 # Method
 ## Step 1: Launch a MDLE shell
 ### 1.1 Start a MLDE shell. 
-
-Set up a shell config file shell.yaml that provides a readily built docker image by Determined AI and available on DockerHub
 
 ```yaml
 description: fastfold-inference
