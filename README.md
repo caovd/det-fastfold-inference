@@ -1,13 +1,13 @@
 # det-fastfold-inference
-Run FastFold inference on MLDE
+Run FastFold inference uing HPE Machine Learning Development Environment (aka MLDE)
 
 # Ref: 
-1. fastfold github repo: https://github.com/hpcaitech/FastFold/tree/main
+1. [FastFold github repo](https://github.com/hpcaitech/FastFold/tree/main)
+2. [How to start a shell in MLDE](https://hpe-mlde.determined.ai/latest/tools/cli/commands-and-shells.html#shells)
 
 # Method
 ## Step 1: Launch a MDLE shell
-### 1.1 Start a shell. 
-Refer to [How to start a shell in MLDE] (https://hpe-mlde.determined.ai/latest/tools/cli/commands-and-shells.html#shells)
+### 1.1 Start a MLDE shell. 
 
 Set up a shell config file shell.yaml that provides a readily built docker image by Determined AI and available on DockerHub
 
@@ -107,8 +107,8 @@ bash inference.sh
 Set `PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:15000` to inference long sequence, ex., 8K or 10K residues
 
 ### Chunk size effect
-Adjusting to a smaller chunk_size to reduce memory peak and OOM.
-See example below on how different chunk_sizes work/lead to OOM when running a 3507 sequence input.
+Reducing to a smaller chunk_size to reduce memory peak and OOM.
+See example below on how different chunk_sizes work/lead to OOM when running a 3507-residue input.
 
 - Chunk_size 512
 RuntimeError: CUDA out of memory. Tried to allocate 93.89 GiB (GPU 0; 79.21 GiB total capacity; 26.53 GiB already allocated; 48.67 GiB free; 28.83 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
