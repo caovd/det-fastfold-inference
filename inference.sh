@@ -4,9 +4,9 @@
 # add '--chunk_size [N]' to use chunk to reduce peak memory
 # add '--inplace' to use inplace to save memory
 
-python inference.py /nvmefs1/daniel.cao/fastfold/data/fasta_dir/3507.fasta /nvmefs1/daniel.cao/openfold/data/pdb_mmcif/data/files \
+python inference.py /nvmefs1/daniel.cao/fastfold/data/fasta_dir/$1.fasta /nvmefs1/daniel.cao/openfold/data/pdb_mmcif/data/files \
     --output_dir /nvmefs1/daniel.cao/fastfold/outputs \
-    --gpus 4 \
+    --gpus $2 \
     --uniref90_database_path /nvmefs1/daniel.cao/openfold/data/uniref90/uniref90.fasta \
     --mgnify_database_path /nvmefs1/daniel.cao/openfold/data/mgnify/mgy_clusters_2018_12.fa \
     --pdb70_database_path /nvmefs1/daniel.cao/openfold/data/pdb70/pdb70 \
@@ -19,5 +19,5 @@ python inference.py /nvmefs1/daniel.cao/fastfold/data/fasta_dir/3507.fasta /nvme
     --enable_workflow \
     --param_path /nvmefs1/daniel.cao/fastfold/data/params/params_model_1_ptm.npz \
     --use_precomputed_alignments /nvmefs1/daniel.cao/fastfold/outputs/alignments \
-    --chunk_size 128 \
+    --chunk_size $3 \
     --inplace

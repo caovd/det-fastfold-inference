@@ -7,7 +7,7 @@ Advantages of running training/inference processes on MLDE:
 
 - **Containerised environment**: Process environment is isolated from the host OS, so users do have constraint with upgrading/downgrading packages
 
-- **Automated GPU resource procurement** by defining slots number in a config file
+- **Automated GPU resource procurement** by only defining slots number in a config file
 
 - **Automated SSH** to the launched shell environment without the need to manually setup and manage credentials when connecting to a remote cluster
 
@@ -28,11 +28,14 @@ environment:
     - PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:15000
     # You need to set PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:15000 to inference such an extreme long sequence.
     # You may need to modify this to match your network configuration.
-    #- NCCL_SOCKET_IFNAME=ens,eth,ib
+    - NCCL_SOCKET_IFNAME=ens,eth,ib
+    - CUDA_LAUNCH_BLOCKING=1
 resources:
   slots: 8
   resource_pool: A100
 ```
+
+Note: Users can define an environment variable inside shell.yaml, ex., "PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:15000" which is used to inference extremely long sequences.
 
 ```bash
 det -m http://mlds-determined.us.rdlabs.hpecorp.net:8080/ shell start --config-file shell.yaml -c .
@@ -106,8 +109,11 @@ python inference.py /PATH/TO/fastfold/data/fasta_dir/5005.fasta /PATH/TO/openfol
 
 ### 3.2 Run inference
 ```shell
-bash inference.sh
+bash inference.sh arg1 arg2 arg3
 ```
+arg1: # of residues in fasta file
+arg2: # of GPUs
+arg3: chunk size
 
 ![](/assets/gpu_util_5005.png)
 

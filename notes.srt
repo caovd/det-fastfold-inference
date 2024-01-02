@@ -1,0 +1,27 @@
+bash inference.sh 14507 8 64
+RuntimeError: CUDA out of memory. Tried to allocate 50.96 GiB (GPU 7; 79.21 GiB total capacity; 60.10 GiB already allocated; 17.51 GiB free; 60.13 GiB reserved in total by PyTorch) 
+
+bash inference.sh 14507 8 8
+RuntimeError: CUDA out of memory. Tried to allocate 50.96 GiB (GPU 5; 79.21 GiB total capacity; 60.10 GiB already allocated; 17.37 GiB free; 60.13 GiB reserved in total by PyTorch)
+
+bash inference.sh 13477 8 8
+RuntimeError: CUDA out of memory. Tried to allocate 43.98 GiB (GPU 7; 79.21 GiB total capacity; 52.39 GiB already allocated; 25.22 GiB free; 52.42 GiB reserved in total by PyTorch)
+
+bash inference.sh 8797 8 8
+RuntimeError: CUDA out of memory. Tried to allocate 36.90 GiB (GPU 0; 79.21 GiB total capacity; 42.99 GiB already allocated; 34.64 GiB free; 43.00 GiB reserved in total by PyTorch)
+
+bash inference.sh 8797 8 64
+RuntimeError: CUDA out of memory. Tried to allocate 36.90 GiB (GPU 5; 79.21 GiB total capacity; 42.99 GiB already allocated; 34.50 GiB free; 43.00 GiB reserved in total by PyTorch)
+
+bash inference.sh 7081 8 8
+RuntimeError: CUDA out of memory. Tried to allocate 47.82 GiB (GPU 4; 79.21 GiB total capacity; 28.83 GiB already allocated; 37.39 GiB free; 40.12 GiB reserved in total by PyTorch)
+
+bash inference.sh 5890 8 8
+RuntimeError: CUDA out of memory. Tried to allocate 11.37 GiB (GPU 7; 79.21 GiB total capacity; 65.14 GiB already allocated; 7.38 GiB free; 70.26 GiB reserved in total by PyTorch)
+
+bash inference.sh 5005 8 8
+RuntimeError: CUDA out of memory. Tried to allocate 8.21 GiB (GPU 4; 79.21 GiB total capacity; 61.80 GiB already allocated; 3.49 GiB free; 71.37 GiB reserved in total by PyTorch)
+
+bash inference.sh 4008 8 8
+assert numerator % denominator == 0, '{} is not divisible by {}'.format(numerator, denominator)
+AssertionError: 132 is not divisible by 8

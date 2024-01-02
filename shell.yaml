@@ -1,4 +1,4 @@
-description: daniel-ff-test
+description: dcao-ff-test
 environment:
   image: determinedai/environments:cuda-11.3-pytorch-1.12-gpu-mpi-0.26.4
   environment_variables:
@@ -6,7 +6,7 @@ environment:
     - PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:15000
     # You need to set PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:15000 to inference such an extreme long sequence.
     # You may need to modify this to match your network configuration.
-    #- NCCL_SOCKET_IFNAME=ens,eth,ib
+    - NCCL_SOCKET_IFNAME=ens,eth,ib
 resources:
-  slots: 8
+  slots: 16
   resource_pool: A100
