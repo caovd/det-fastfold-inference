@@ -61,6 +61,17 @@ Last login: Tue Dec 19 02:42:39 2023 from 10.42.3.76
 ```
 
 ## Step 2: Setup environment 
+
+You don't need to setup environment manually. Alternatively, a custom docker image, ```caovd/fastfold-1.0```,  was created and referred to in the shell.yaml. In case you need to create your own docker image, first build a docker image locally and push to docker hub. Note: You might need to log in your docker account credentials.
+
+```bash
+docker login
+docker build -t caovd/fastfold-1.0:v1 .
+docker push -a caovd/fastfold-1.0
+```
+
+The following manual setup steps have been deprecated and replaced by the above custom docker image.
+
 ```bash
 apt update 
 cd /run/determined/workdir
@@ -75,8 +86,6 @@ Then reopen the shell using the step 1.2
 conda activate fastfold
 python setup.py install
 ```
-
-Note: Step 2 will be simplified in future release.
 
 ## Step 3: Run inference
 ### 3.1 Edit the inference.sh file

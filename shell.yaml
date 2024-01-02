@@ -1,6 +1,6 @@
 description: dcao-ff-test
 environment:
-  image: determinedai/environments:cuda-11.3-pytorch-1.12-gpu-mpi-0.26.4
+  image: caovd/fastfold-1.0
   environment_variables:
     - NCCL_DEBUG=INFO
     - PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:15000
@@ -8,5 +8,5 @@ environment:
     # You may need to modify this to match your network configuration.
     - NCCL_SOCKET_IFNAME=ens,eth,ib
 resources:
-  slots: 16
+  slots: 8
   resource_pool: A100
