@@ -6,4 +6,4 @@ RUN conda install openmm=7.7.0 pdbfixer -c conda-forge -y \
 RUN pip install biopython==1.79 dm-tree==0.1.6 ml-collections==0.1.0 \
 scipy==1.7.1 ray pyarrow pandas einops
 
-RUN pip install colossalai
+RUN pip install colossalai==0.2.7

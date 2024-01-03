@@ -1,6 +1,6 @@
 description: dcao-ff-test
 environment:
-  image: caovd/fastfold-1.0
+  image: caovd/fastfold-1.0:v2
   environment_variables:
     - NCCL_DEBUG=INFO
     - PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:15000
