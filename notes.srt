@@ -25,3 +25,10 @@ RuntimeError: CUDA out of memory. Tried to allocate 8.21 GiB (GPU 4; 79.21 GiB t
 bash inference.sh 4008 8 8
 assert numerator % denominator == 0, '{} is not divisible by {}'.format(numerator, denominator)
 AssertionError: 132 is not divisible by 8
+
+
+ModuleNotFoundError: No module named 'colossalai.context.parallel_mode'
+->
+RUN pip install colossalai==0.2.7
+->
+caovd/fastfold-1.0:v2
