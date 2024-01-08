@@ -22,14 +22,13 @@ Advantages of running training/inference processes on MLDE:
 ```yaml
 description: fastfold-inference
 environment:
-  image: determinedai/environments:cuda-11.3-pytorch-1.12-gpu-mpi-0.26.4
+  image: caovd/fastfold-1.0:v2
   environment_variables:
     - NCCL_DEBUG=INFO
     - PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:15000
     # You need to set PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:15000 to inference such an extreme long sequence.
     # You may need to modify this to match your network configuration.
     - NCCL_SOCKET_IFNAME=ens,eth,ib
-    - CUDA_LAUNCH_BLOCKING=1
 resources:
   slots: 8
   resource_pool: A100
@@ -41,23 +40,9 @@ Note: Users can define an environment variable inside shell.yaml, ex., "PYTORCH_
 det -m http://mlds-determined.us.rdlabs.hpecorp.net:8080/ shell start --config-file shell.yaml -c .
 ```
 
-```
-Preparing files to send to master... 2.7MB and 225 files  
-Launched shell (id: XXXXXXXX-252b-4071-83a3-830336a3e870).
-shell (id: XXXXXXXX-252b-4071-83a3-830336a3e870) is ready.                      
-Warning: Permanently added 'XXXXXXXX-252b-4071-83a3-830336a3e870' (RSA) to the list of known hosts.
-root@cmd-XXXXXXXX-252b-4071-83a3-830336a3e870-0-9a449ddb-252b-4071-8:~#
-```
-
 ### 1.2 Open an existing MLDE shell 
 ```bash
-det -m http://mlds-determined.us.rdlabs.hpecorp.net:8080/ shell open <shell_ID>
-```
-
-```
-shell (id: XXXXXXXX-252b-4071-83a3-830336a3e870) is ready.                      
-Last login: Tue Dec 19 02:42:39 2023 from 10.42.3.76
-(base) root@cmd-XXXXXXXX-252b-4071-83a3-830336a3e870-0-9a449ddb-252b-4071-8:~#
+det -m http://mlds-determined.us.rdlabs.hpecorp.net:8080/ shell open <shell_id>
 ```
 
 ## Step 2: Setup environment 
@@ -66,11 +51,11 @@ You don't need to setup environment manually. Alternatively, a custom docker ima
 
 ```bash
 docker login
-docker build -t caovd/fastfold-1.0:v1 .
+docker build -t caovd/fastfold-1.0:v2 .
 docker push -a caovd/fastfold-1.0
 ```
 
-The following manual setup steps have been deprecated and replaced by the above custom docker image.
+The following manual setup steps have been deprecated and replaced by the above custom docker image build step.
 
 ```bash
 apt update 
@@ -127,7 +112,7 @@ arg3: chunk size
 ![](/assets/gpu_util_5005.png)
 
 ## Notes: 
-### Pytorch cuda memory allocation
+### Pytorch CUDA memory allocation
 
 Set `PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:15000` to inference long sequence, ex., 8K or 10K residues
 
