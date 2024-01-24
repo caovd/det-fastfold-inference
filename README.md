@@ -3,21 +3,21 @@ Run FastFold inference uing HPE Machine Learning Development Environment (aka ML
 
 Advantages of running training/inference processes on MLDE:
 
-- **Simplified environment setting**: Set up a shell config file shell.yaml that provides a readily built docker image by Determined AI (aka MLDE) and available on DockerHub. These docker images are frequently released and users just need to pick and choose the right image which, in this example, requires CUDA 11.3 and Pytorch >= 1.12.
+- **Simplified environment setting**: Set up a notebook config file notebook.yaml that provides a readily built docker image by Determined AI (aka MLDE) and available on DockerHub. These docker images are frequently released and users just need to pick and choose the right image which, in this example, requires CUDA 11.3 and Pytorch >= 1.12.
 
 - **Containerised environment**: Process environment is isolated from the host OS, so users do have constraint with upgrading/downgrading packages
 
 - **Automated GPU resource procurement** by only defining slots number in a config file
 
-- **Automated SSH** to the launched shell environment without the need to manually setup and manage credentials when connecting to a remote cluster
+- **Automated SSH** In case you launch a shell, the SSH access to the launched shell environment without the need to manually setup and manage credentials when connecting to a remote cluster is automatically setup by MLDE
 
 # References: 
 1. [FastFold github repo](https://github.com/hpcaitech/FastFold/tree/main)
-2. [How to start a shell in MLDE](https://hpe-mlde.determined.ai/latest/tools/cli/commands-and-shells.html#shells)
+2. [How to start a Jupyter Notebook in MLDE](https://hpe-mlde.determined.ai/latest/tools/notebooks.html#jupyter-notebooks)
 
 # Method
-## Step 1: Launch a MDLE shell
-### 1.1 Start a MLDE shell. 
+## Step 1: Launch a MDLE notebook
+### 1.1 Start a MLDE notebook. 
 
 ```yaml
 description: fastfold-inference
@@ -34,43 +34,15 @@ resources:
   resource_pool: A100
 ```
 
-Note: Users can define an environment variable inside shell.yaml, ex., "PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:15000" which is used to inference extremely long sequences.
+Note: Users can define an environment variable inside notebook.yaml, ex., "PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:15000" which is used to inference extremely long sequences.
 
 ```bash
-det -m http://mlds-determined.us.rdlabs.hpecorp.net:8080/ shell start --config-file shell.yaml -c .
+det -m <mlde-master> notebook start --config-file notebook.yaml -c .
 ```
 
-### 1.2 Open an existing MLDE shell 
-```bash
-det -m http://mlds-determined.us.rdlabs.hpecorp.net:8080/ shell open <shell_id>
-```
+## Step 2: Setup environment (Optional)
 
-## Step 2: Setup environment 
-
-You don't need to setup environment manually. Alternatively, a custom docker image, ```caovd/fastfold-1.0```,  was created and referred to in the shell.yaml. In case you need to create your own docker image, first build a docker image locally and push to docker hub. Note: You might need to log in your docker account credentials.
-
-```bash
-docker login
-docker build -t caovd/fastfold-1.0:v2 .
-docker push -a caovd/fastfold-1.0
-```
-
-The following manual setup steps have been deprecated and replaced by the above custom docker image build step.
-
-```bash
-apt update 
-cd /run/determined/workdir
-conda env create --name=fastfold -f environment.yml
-conda init
-exit 
-```
-
-Then reopen the shell using the step 1.2
-
-```bash
-conda activate fastfold
-python setup.py install
-```
+You don't need to setup environment manually, as it's handled by MLDE automatically. A custom docker image, ```caovd/fastfold-1.0```,  was created and referred to in the notebok.yaml. Additionally, you can customize startup-hook.sh to add custom packages and dependencies, to add flexibility and adaptability to changing requirements. 
 
 ## Step 3: Run inference
 ### 3.1 Edit the inference.sh file
@@ -114,17 +86,5 @@ arg3: chunk size
 ## Notes: 
 ### Pytorch CUDA memory allocation
 
-Set `PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:15000` to inference long sequence, ex., 8K or 10K residues
+Set `PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:15000` to inference long sequence, ex., 8K or 10K residues.
 
-### Chunk size effect
-Reducing to a smaller chunk_size to reduce memory peak and OOM.
-See example below on how different chunk_sizes work/lead to OOM when running a 3507-residue input.
-
-- Chunk_size 512
-RuntimeError: CUDA out of memory. Tried to allocate 93.89 GiB (GPU 0; 79.21 GiB total capacity; 26.53 GiB already allocated; 48.67 GiB free; 28.83 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
-
-- Chunk_size 256
-RuntimeError: CUDA out of memory. Tried to allocate 46.95 GiB (GPU 1; 79.21 GiB total capacity; 25.04 GiB already allocated; 45.61 GiB free; 31.77 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
-
-- Chunk_size 128
-Both GPUs use about almost ~80GB, but might still be running okay. 

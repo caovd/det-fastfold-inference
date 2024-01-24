@@ -1,0 +1,12 @@
+description: dcao-ff-test-4gpu
+environment:
+  image: caovd/fastfold-1.0:v2
+  environment_variables:
+    - NCCL_DEBUG=INFO
+    - PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:15000
+    # You need to set PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:15000 to inference such an extreme long sequence.
+    # You may need to modify this to match your network configuration.
+    - NCCL_SOCKET_IFNAME=ens,eth,ib
+resources:
+  slots: 4
+  resource_pool: A100
