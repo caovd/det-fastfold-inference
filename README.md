@@ -83,8 +83,6 @@ arg1: # of residues in fasta file
 arg2: # of GPUs
 arg3: chunk size
 
-![](/assets/gpu_util_5005.png)
-
 ## Notes: 
 ### Pytorch CUDA memory allocation
 
