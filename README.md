@@ -34,7 +34,7 @@ resources:
   resource_pool: A100
 ```
 
-You can change the number of GPUs and the resource pool, ex., A100 or V100, etc,  dedicated to the Jupyter Notebook by adjusting "slots" parameter.
+You can change the number of GPUs and the resource pool, ex., A100 or V100, etc,  dedicated to the Jupyter Notebook by adjusting "slots" and "resource pool" parameter sections.
 
 Note: Users can define an environment variable inside notebook.yaml, ex., "PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:15000" which is used to inference extremely long sequences.
 
